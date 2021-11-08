@@ -1,0 +1,1 @@
+# foss-orta-contacts-manager
