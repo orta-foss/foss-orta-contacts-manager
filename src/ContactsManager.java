@@ -8,8 +8,6 @@ import java.util.*;
 
 public class ContactsManager {
 
-
-
     public static void main(String[] args) throws IOException {
         String directory = "./src/text";
         String fileName = "contactsList.txt";
@@ -31,8 +29,9 @@ public class ContactsManager {
         List<String> contactsList = List.of();
         boolean useManager = true;
 
+        System.out.println("Hello, and welcome to your Contacts Manager!");
         do {
-        System.out.println("Hello, welcome to your Contacts Manager, choose from the follow options: ");
+        System.out.println("Choose from the following options:");
         System.out.println("1. View All Contacts");
         System.out.println("2. Add a new contact");
         System.out.println("3. Search a contact by name");
@@ -40,6 +39,7 @@ public class ContactsManager {
         System.out.println("5. Exit");
         System.out.println("Enter an option (1, 2, 3, 4 or 5):");
         int userChoice = scanner.nextInt();
+        scanner.nextLine();
             switch (userChoice) {
                 case 1:
                     List<String> printList = Files.readAllLines(textPath);
@@ -49,7 +49,7 @@ public class ContactsManager {
                     break;
                 case 2:
                     System.out.println("What is the first name of your contact?");
-                    String contact = scanner.next();
+                    String contact = scanner.nextLine();
 
                     System.out.println("What's their number?");
                     long number = scanner.nextLong();
@@ -64,7 +64,7 @@ public class ContactsManager {
                     break;
                 case 3:
                     System.out.println("Who would you like to search for?");
-                    String search = scanner.next();
+                    String search = scanner.nextLine();
                     contactsList = Files.readAllLines(textPath);
                     for(String line : contactsList){
                         if(line.contains(search)){
@@ -101,6 +101,6 @@ public class ContactsManager {
             System.out.println("Do you want to continue?");
             useManager = scanner.next().equalsIgnoreCase("y");
         } while(useManager);
-        System.out.println("Cool. Peace out.");
+        System.out.println("Ok, bye.");
     }
 }
