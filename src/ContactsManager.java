@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,7 +24,7 @@ public class ContactsManager {
         Scanner scanner = new Scanner(System.in);
         //Checks to see if we have the text file in our system
         System.out.println(Files.exists(textPath));
-        TreeMap<String, Long> contactsMap = new TreeMap<>();
+        TreeMap<String, String> contactsMap = new TreeMap<>();
         List<String> contactsList = List.of();
         boolean useManager = true;
 
@@ -39,7 +38,7 @@ public class ContactsManager {
         System.out.println("5. Exit");
         System.out.println("Enter an option (1, 2, 3, 4 or 5):");
         int userChoice = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); //needed because .nextInt() doesn't register when the enter key has been pressed and requires this to end the .nextInt()'s continuing search for an integer. This allows the next scanner method to work whatever that method happens to be.
             switch (userChoice) {
                 case 1:
                     List<String> printList = Files.readAllLines(textPath);
@@ -48,17 +47,63 @@ public class ContactsManager {
                     }
                     break;
                 case 2:
-                    System.out.println("What is the first name of your contact?");
+                    System.out.println("What is the name of your contact?");
                     String contact = scanner.nextLine();
 
                     System.out.println("What's their number?");
                     long number = scanner.nextLong();
+                    int numLength = Long.toString(number).length();
+                    char[] oldNumArr = Long.toString(number).toCharArray();
+                    String newNumStr = "";
+                    int firstThree = 0;
+                    int secondThree = 0;
 
-                    contactsMap.put(contact, number);
-                    System.out.println("contacts = " + contactsMap);
+                    switch (numLength) {
+                        case (7) -> {
+                            for (int i = 0; i < oldNumArr.length; i++) {
+                                newNumStr += oldNumArr[i];
+                                firstThree++;
+                                if (firstThree == 3) {
+                                    break;
+                                }
+                            }
+                            newNumStr += "-";
+                            for (int i = 3; i < oldNumArr.length; i++) {
+                                newNumStr += oldNumArr[i];
+                            }
+                            contactsMap.put(contact, newNumStr);
+                            List<String> test = List.of("Name: " + contact + " & Phone Number: " + newNumStr);
+                            Files.write(textPath, test, StandardOpenOption.APPEND);
+                        }
+                        case (10) -> {
+                            for (int i = 0; i < oldNumArr.length; i++) {
+                                newNumStr += oldNumArr[i];
+                                firstThree++;
+                                if (firstThree == 3) {
+                                    break;
+                                }
+                            }
+                            newNumStr += "-";
+                            for (int i = 3; i < oldNumArr.length; i++) {
+                                newNumStr += oldNumArr[i];
+                                secondThree++;
+                                if (secondThree == 3) {
+                                    break;
+                                }
+                            }
+                            newNumStr += "-";
+                            for (int i = 6; i < oldNumArr.length; i++) {
+                                newNumStr += oldNumArr[i];
+                            }
 
-                    List<String> test = List.of("Name: " + contact + " & Phone Number: " + number);
-                    Files.write(textPath, test, StandardOpenOption.APPEND);
+                            contactsMap.put(contact, newNumStr);
+                            List<String> test = List.of("Name: " + contact + " & Phone Number: " + newNumStr);
+                            Files.write(textPath, test, StandardOpenOption.APPEND);
+                        }
+                        default -> {
+                            System.out.println("That's not a valid format. Please try again.");
+                        }
+                    }
 
                     Files.readAllLines(textPath);
                     break;
