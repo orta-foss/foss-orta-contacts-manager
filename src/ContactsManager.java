@@ -7,7 +7,6 @@ import java.util.*;
 
 public class ContactsManager {
 
-
     public static void main(String[] args) {
         try {
             String directory = "./src/text";
@@ -123,7 +122,6 @@ public class ContactsManager {
                         String delete = scanner.next();
                         contactsList = Files.readAllLines(textPath);
                         List<String> replacement = new ArrayList<>();
-                        try {
                             for (String line : contactsList) {
                                 if (line.contains(delete)) {
                                     continue;
@@ -132,9 +130,6 @@ public class ContactsManager {
                                 }
                             }
                             Files.write(textPath, replacement);
-                        } catch (ConcurrentModificationException e) {
-                            e.printStackTrace();
-                        }
                         System.out.println("Deleted: " + delete + "! View your list to see the changes.");
                         break;
                     case 5:
@@ -148,8 +143,8 @@ public class ContactsManager {
                 useManager = scanner.next().equalsIgnoreCase("y");
             } while (useManager);
             System.out.println("Cool. Peace out.");
-        } catch (IOException | ConcurrentModificationException e) {
-            System.out.println("It's all taken care of!");
+        } catch (IOException | ConcurrentModificationException | InputMismatchException e) {
+            System.out.println("We're working on it... don't worry!");
         }
     }
 }
