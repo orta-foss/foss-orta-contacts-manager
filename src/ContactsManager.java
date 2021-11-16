@@ -41,12 +41,14 @@ public class ContactsManager {
                 int userChoice = scanner.nextInt();
                 scanner.nextLine(); //needed because .nextInt() doesn't register when the enter key has been pressed and requires this to end the .nextInt()'s continuing search for an integer. This allows the next scanner method to work whatever that method happens to be.
                 switch (userChoice) {
+                    //View All Contacts
                     case 1:
                         List<String> printList = Files.readAllLines(textPath);
                         for (int i = 0; i < printList.size(); i++) {
                             System.out.println(printList.get(i));
                         }
                         break;
+                        //Add New Contact
                     case 2:
                         System.out.println("What is the name of your contact?");
                         String contact = scanner.nextLine();
@@ -59,6 +61,7 @@ public class ContactsManager {
                         int firstThree = 0;
                         int secondThree = 0;
 
+                        //Formatting dashes into 7 - 10 numbers
                         switch (numLength) {
                             case (7) -> {
                                 for (int i = 0; i < oldNumArr.length; i++) {
@@ -107,6 +110,7 @@ public class ContactsManager {
                         }
                         Files.readAllLines(textPath);
                         break;
+                        //Search by contact name
                     case 3:
                         System.out.println("Who would you like to search for?");
                         String search = scanner.next();
@@ -117,6 +121,7 @@ public class ContactsManager {
                             }
                         }
                         break;
+                        //Delete an existing contact
                     case 4:
                         System.out.println("Who would you like to delete?");
                         String delete = scanner.next();
@@ -132,6 +137,7 @@ public class ContactsManager {
                             Files.write(textPath, replacement);
                         System.out.println("Deleted: " + delete + "! View your list to see the changes.");
                         break;
+                        //Exit code
                     case 5:
                         System.out.println("Ok, bye.");
                         return;
