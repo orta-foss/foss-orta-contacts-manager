@@ -1,1 +1,1 @@
-# foss-orta-contacts-manager
+# contacts-manager-refactor
